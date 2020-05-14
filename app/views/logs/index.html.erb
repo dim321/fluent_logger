@@ -1,0 +1,65 @@
+<%- model_class = Log -%>
+<div class="container">
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<div class="container">
+<h2>Status</h2>
+      <%= pie_chart @statuses, donut: true, label: "Status" %>
+
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+<!--      <th><%= model_class.human_attribute_name(:info) %></th> -->
+      <th><%= model_class.human_attribute_name(:method) %></th>
+      <th><%= model_class.human_attribute_name(:path) %></th>
+<!--      <th><%= model_class.human_attribute_name(:format) %></th> -->
+      <th><%= model_class.human_attribute_name(:controller) %></th>
+      <th><%= model_class.human_attribute_name(:action) %></th>
+      <th><%= model_class.human_attribute_name(:status) %></th>
+      <th><%= model_class.human_attribute_name(:duration) %></th>
+<!--      <th><%= model_class.human_attribute_name(:view) %></th> -->
+<!--      <th><%= model_class.human_attribute_name(:db) %></th> -->
+      <th><%= model_class.human_attribute_name(:location) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @logs.each do |log| %>
+      <tr>
+        <td><%= link_to log.id, log_path(log) %></td>
+<!--        <td><%= log.info %></td> -->
+        <td><%= log.method %></td>
+        <td><%= log.path %></td>
+<!--        <td><%= log.format %></td> -->
+        <td><%= log.controller %></td>
+        <td><%= log.action %></td>
+        <td><%= log.status %></td>
+        <td><%= log.duration %></td>
+<!--        <td><%= log.view %></td> -->
+<!--        <td><%= log.db %></td>  -->
+        <td><%= log.location %></td>
+        <td><%=l log.created_at %></td>
+        <td>
+<!--          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_log_path(log), :class => 'btn btn-default btn-xs' %> -->
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      log_path(log),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_log_path,
+            :class => 'btn btn-primary' %>
+<span class="pagination"> <%= paginate @logs %> </span>
+</div>
