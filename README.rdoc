@@ -7,18 +7,25 @@ Rails logger with fluentd gem. Use Fluentd for collect Rails logs into Postgres 
 * Clone repo and run:
 
 $ bundle install
+
 $ fluentd --setup ./fluent
+
 $ fluent-gem install fluent-plugin-sql --no-document
+
 $ fluent-gem install pg --no-document # for postgresql
 
 * Create and initialize database (I use Postgresql by default):
-* bundle exec rake db:create
-* bundle exec rake db:migrate
+
+$ bundle exec rake db:create
+
+$ bundle exec rake db:migrate
 
 * Run fluentd daemon:
+
 $ fluentd -c ./fluent/fluent.conf -vv &
 
-* If you want to stop daemon, you can use 
+* If you want to stop daemon, you can use:
+
 $ pkill -f fluentd
 
 
