@@ -5,8 +5,10 @@ class LogsController < ApplicationController
   # GET /logs.json
   def index
     @logs = Log.all.order('created_at DESC').page params[:page]
+    @long_duration_logs = Log.order(duration: :desc).limit(10)
     @statuses = Log.group(:status).count
     @methods = Log.group(:method).count
+    @controllers = Log.group(:controller).count
   end
 
   def statuses

@@ -1,28 +1,24 @@
-== README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Rails logger with fluentd gem. Use Fluentd for collect Rails logs into Postgres DB to analyze application performance.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Ruby 2.3.0, Rails 4.2.5
+
+* Clone repo and run:
+
+$ bundle install
+$ fluentd --setup ./fluent
+$ fluent-gem install fluent-plugin-sql --no-document
+$ fluent-gem install pg --no-document # for postgresql
+
+* Create and initialize database (I use Postgresql by default):
+* bundle exec rake db:create
+* bundle exec rake db:migrate
+
+* Run fluentd daemon:
+$ fluentd -c ./fluent/fluent.conf -vv &
+
+* If you want to stop daemon, you can use 
+$ pkill -f fluentd
+
+
